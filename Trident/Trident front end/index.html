@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TRIDENT — discover jobs, internships and opportunities.">
+  <title>Trident — Opportunities in Motion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bebas+Neue&family=Cabin+Sketch:wght@400;700&family=Caveat:wght@400..700&family=Chewy&family=Pacifico&family=Roboto:ital,wght@0,100..900;1,100..900&family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="loader">
+    <div class="loader-mark">♆</div>
+    <div class="loader-copy">RAISING THE OPPORTUNITY BOARD <span id="loadProgress">0%</span></div>
+    <div class="loader-line"><span></span></div>
+  </div>
+
+  <canvas id="world"></canvas>
+  <div class="grain"></div>
+  <div class="cursor-glow"></div>
+
+  <header class="nav">
+    <a class="brand" href="#home" aria-label="Trident home">
+      <span class="brand-jp">♆</span>
+      <span>
+        <b>TRIDENT</b>
+        <small>OPPORTUNITY REALMS</small>
+      </span>
+    </a>
+    <nav class="nav-links">
+      <a href="#jobs">Jobs</a>
+      <a href="#internships">Internships</a>
+      <a href="#companies">Companies</a>
+      <a href="#how">How it works</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="ghost-btn" data-open="login">Sign in</button>
+      <button class="primary-btn" data-open="register">Create profile</button>
+    </div>
+    <button class="menu-toggle" aria-label="Open menu">☰</button>
+  </header>
+
+  <main>
+    <section id="home" class="hero scene">
+      <div class="hero-kicker"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">CHAPTER 00 - THE BEGINNING <br>CAREERS, INTERNSHIPS, OPPORTUNITY</p>
+        <h1 class="main-line">Where the right<br><em>opportunity</em> finds you.</h1>
+        <p class="hero-text">Build your profile. Discover work worth doing. Meet companies looking for people with your ambition.</p>
+        <div class="hero-actions">
+          <a class="primary-btn large" href="#jobs">Explore opportunities <span>↗</span></a>
+          <button class="text-btn" data-open="company">I'm hiring <span>→</span></button>
+        </div>
+      </div>
+      <div class="hero-side">
+        <span>SCROLL TO ENTER</span>
+        <div class="scroll-line"></div>
+      </div>
+      <div class="hero-stat">
+        <strong>12,840+</strong>
+        <span>active opportunities</span>
+      </div>
+    </section>
+
+    <section class="thresholds section-pad">
+      <div class="section-head">
+        <div>
+          <span class="chapter">01 — THRESHOLDS</span>
+          <h2>Choose your path.</h2>
+        </div>
+        <p>Every opportunity starts with a direction. Tell us what you are looking for and let the right doors appear.</p>
+      </div>
+      <div class="path-grid">
+        <a href="#jobs" class="path-card">
+          <span class="path-no">01</span>
+          <div class="path-icon">↗</div>
+          <h3>Find a job</h3>
+          <p>Full-time roles from companies building what comes next.</p>
+          <span class="path-link">Explore jobs →</span>
+        </a>
+        <a href="#internships" class="path-card active">
+          <span class="path-no">02</span>
+          <div class="path-icon">⌁</div>
+          <h3>Find an internship</h3>
+          <p>Learn by doing. Find internships that give you real work.</p>
+          <span class="path-link">Explore internships →</span>
+        </a>
+        <a href="#companies" class="path-card">
+          <span class="path-no">03</span>
+          <div class="path-icon">◌</div>
+          <h3>Hire talent</h3>
+          <p>Publish openings and meet people who can move your team.</p>
+          <span class="path-link">Post an opening →</span>
+        </a>
+      </div>
+    </section>
+
+    <section id="jobs" class="opportunities section-pad">
+      <div class="section-head">
+        <div>
+          <span class="chapter">02 — THE BOARD</span>
+          <h2>Open doors.</h2>
+        </div>
+        <p>Curated opportunities. Clear expectations. No noise.</p>
+      </div>
+      <div class="filters">
+        <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search roles, skills, companies..."></label>
+        <select id="typeFilter">
+          <option value="all">All types</option>
+          <option value="Full-time">Full-time</option>
+          <option value="Internship">Internship</option>
+          <option value="Part-time">Part-time</option>
+        </select>
+        <select id="modeFilter">
+          <option value="all">All modes</option>
+          <option value="Remote">Remote</option>
+          <option value="Hybrid">Hybrid</option>
+          <option value="On-site">On-site</option>
+        </select>
+      </div>
+      <div id="jobGrid" class="job-grid"></div>
+      <button class="outline-btn load-more" id="loadMore">Load more opportunities</button>
+    </section>
+
+    <section id="internships" class="feature-scene">
+      <div class="feature-image">
+        <div class="orb"></div>
+        <div class="feature-image-label">FIELD NOTE 02 / 03</div>
+      </div>
+      <div class="feature-copy">
+        <span class="chapter">03 — STILL GROWTH</span>
+        <h2>Internships that<br><em>teach, not occupy.</em></h2>
+        <p>Find roles where your first day is the beginning of a real learning curve. Work with founders, engineers, designers and teams who expect you to contribute.</p>
+        <div class="feature-list">
+          <div><span>01</span><b>Real projects</b><small>Build something shipped to users.</small></div>
+          <div><span>02</span><b>Mentorship</b><small>Learn directly from people doing the work.</small></div>
+          <div><span>03</span><b>Career signal</b><small>Turn experience into proof of ability.</small></div>
+        </div>
+        <a class="primary-btn" href="#jobs">Find an internship <span>↗</span></a>
+      </div>
+    </section>
+
+    <section id="companies" class="companies section-pad">
+      <div class="section-head">
+        <div>
+          <span class="chapter">04 — COMPANY GARDENS</span>
+          <h2>Meet the builders.</h2>
+        </div>
+        <p>Explore teams by their work, culture and ambition.</p>
+      </div>
+      <div class="company-grid">
+        <article class="company-card"><div class="company-mark">A</div><div><h3>Arc Labs</h3><p>AI · Bengaluru</p></div><span>14 openings</span></article>
+        <article class="company-card"><div class="company-mark">N</div><div><h3>Novo Systems</h3><p>Fintech · Mumbai</p></div><span>8 openings</span></article>
+        <article class="company-card"><div class="company-mark">V</div><div><h3>Vanta Studio</h3><p>Design · Delhi NCR</p></div><span>6 openings</span></article>
+        <article class="company-card"><div class="company-mark">S</div><div><h3>Signal Works</h3><p>Developer tools · Pune</p></div><span>11 openings</span></article>
+      </div>
+      <div class="company-cta">
+        <div><span class="chapter">FOR EMPLOYERS</span><h3>Your next great hire is looking too.</h3></div>
+        <button class="primary-btn" data-open="company">Create a company profile <span>↗</span></button>
+      </div>
+    </section>
+
+    <section id="how" class="steps section-pad">
+      <div class="section-head">
+        <div><span class="chapter">05 — THE PRACTICE</span><h2>Three steps. One profile.</h2></div>
+      </div>
+      <div class="step-row">
+        <div class="step"><span>01</span><h3>Build</h3><p>Create a profile that shows your skills, projects and experience.</p></div>
+        <div class="step"><span>02</span><h3>Discover</h3><p>Search opportunities using role, skill, location and work mode.</p></div>
+        <div class="step"><span>03</span><h3>Apply</h3><p>Send applications and track every opportunity from one place.</p></div>
+      </div>
+    </section>
+
+    <section class="finale">
+      <span class="chapter">CHAPTER 06 — AFTERLIGHT</span>
+      <h2>The next chapter<br>starts with <em>you.</em></h2>
+      <p>Your profile is more than a resume. It is a map of where you can go next.</p>
+      <button class="primary-btn large" data-open="register">Create your profile <span>↗</span></button>
+      <div class="footer-stats"><span>12,840+ opportunities</span><span>4,210 companies</span><span>86,000+ candidates</span></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="brand"><span class="brand-jp">♆</span><span><b>TRIDENT</b><small>OPPORTUNITY REALMS</small></span></div>
+    <p>© 2026 TRIDENT — Find work worth doing.</p>
+    <div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
+  </footer>
+
+  <div class="modal-backdrop" id="modal">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">×</button>
+      <div class="modal-kicker">TRIDENT</div>
+      <h2 id="modalTitle">Create your profile</h2>
+      <p id="modalCopy">Start with the basics. You can complete your profile later.</p>
+      <form id="modalForm">
+        <input type="text" placeholder="Full name" required>
+        <input type="email" placeholder="Email address" required>
+        <select><option>Job seeker</option><option>Company / recruiter</option></select>
+        <button class="primary-btn" type="submit">Continue <span>→</span></button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

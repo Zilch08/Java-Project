@@ -1,0 +1,13 @@
+package com.trident.application;
+import com.trident.job.*;import com.trident.user.*;import org.springframework.http.HttpStatus;import org.springframework.security.core.Authentication;import org.springframework.web.bind.annotation.*;import org.springframework.web.server.ResponseStatusException;import java.util.List;
+@RestController @RequestMapping("/api/applications")
+public class ApplicationController {
+ private final ApplicationRepository apps;private final JobRepository jobs;private final UserRepository users;
+ public ApplicationController(ApplicationRepository apps,JobRepository jobs,UserRepository users){this.apps=apps;this.jobs=jobs;this.users=users;}
+ public record Apply(Long jobId,String coverLetter){}public record Status(String status){}
+ @PostMapping @ResponseStatus(HttpStatus.CREATED) public JobApplication apply(@RequestBody Apply r,Authentication a){AppUser u=user(a);if(u.getRole()!=Role.CANDIDATE)throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Candidates only");Job j=jobs.findById(r.jobId()).filter(Job::isActive).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));if(apps.existsByCandidateEmailIgnoreCaseAndJobId(a.getName(),j.getId()))throw new ResponseStatusException(HttpStatus.CONFLICT,"Already applied");JobApplication x=new JobApplication();x.setCandidate(u);x.setJob(j);x.setCoverLetter(r.coverLetter());return apps.save(x);}
+ @GetMapping("/mine") public List<JobApplication> mine(Authentication a){return apps.findByCandidateEmailIgnoreCaseOrderByAppliedAtDesc(a.getName());}
+ @GetMapping("/received") public List<JobApplication> received(Authentication a){if(user(a).getRole()==Role.CANDIDATE)throw new ResponseStatusException(HttpStatus.FORBIDDEN);return apps.findByJobRecruiterEmailIgnoreCaseOrderByAppliedAtDesc(a.getName());}
+ @PatchMapping("/{id}/status") public JobApplication status(@PathVariable Long id,@RequestBody Status r,Authentication a){JobApplication x=apps.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));if(!x.getJob().getRecruiter().getEmail().equalsIgnoreCase(a.getName())&&user(a).getRole()!=Role.ADMIN)throw new ResponseStatusException(HttpStatus.FORBIDDEN);if(!List.of("SUBMITTED","REVIEWING","SHORTLISTED","REJECTED","HIRED").contains(r.status()))throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid status");x.setStatus(r.status());return apps.save(x);}
+ private AppUser user(Authentication a){return users.findByEmailIgnoreCase(a.getName()).orElseThrow(()->new ResponseStatusException(HttpStatus.UNAUTHORIZED));}
+}

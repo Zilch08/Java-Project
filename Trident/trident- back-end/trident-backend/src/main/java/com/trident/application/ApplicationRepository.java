@@ -1,0 +1,3 @@
+package com.trident.application;
+import org.springframework.data.jpa.repository.JpaRepository;import java.util.List;
+public interface ApplicationRepository extends JpaRepository<JobApplication,Long>{boolean existsByCandidateEmailIgnoreCaseAndJobId(String email,Long jobId);List<JobApplication> findByCandidateEmailIgnoreCaseOrderByAppliedAtDesc(String email);List<JobApplication> findByJobRecruiterEmailIgnoreCaseOrderByAppliedAtDesc(String email);}
